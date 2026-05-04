@@ -26,6 +26,7 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
+      injectRegister: 'auto',
       manifest: {
         name: 'Cos Agent Demo',
         short_name: 'CosAgent',
@@ -39,6 +40,12 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,json,webmanifest}'],
         maximumFileSizeToCacheInBytes: 5000000,
+        // 强制跳过等待，立即激活新 SW
+        skipWaiting: true,
+        clientsClaim: true,
+        // 导航回退到 index.html（SPA 必须）
+        navigateFallback: 'index.html',
+        navigateFallbackDenylist: [/^\/api/, /^\/assets/],
       },
     }),
   ],

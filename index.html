@@ -9,6 +9,25 @@
       <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       <title>Cosplay Agent App</title>
       <style>html, body { height: 100%; margin: 0; } #root { height: 100%; }</style>
+      <script>
+        // 清除旧的 Service Worker 和缓存，防止白屏
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(registrations) {
+            for (var r of registrations) { r.update(); }
+          });
+        }
+        if ('caches' in window) {
+          caches.keys().then(function(names) {
+            // 只清除超过1天的旧缓存
+            var now = Date.now();
+            names.forEach(function(name) {
+              if (name.indexOf('workbox-precache') === -1) {
+                caches.delete(name);
+              }
+            });
+          });
+        }
+      </script>
     </head>
 
     <body>
