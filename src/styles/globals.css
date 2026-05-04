@@ -1,0 +1,42 @@
+/* 修复移动端 100vh 问题：使用 CSS 自定义属性设置真实视口高度 */
+:root {
+  --app-height: 100vh;
+}
+
+/* 使用 dvh (dynamic viewport height) 作为首选，回退到 JS 设置的变量 */
+html, body {
+  height: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  /* 防止 iOS Safari 橡皮筋滚动导致背景露出 */
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+#root {
+  height: 100%;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* iOS 安全区域变量 */
+:root {
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
+}
+
+/* 修复 iOS Safari 点击延迟 */
+* {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* 可滚动区域在 iOS 上的惯性滚动 */
+.overflow-auto,
+.overflow-y-auto,
+.overflow-scroll,
+.overflow-y-scroll {
+  -webkit-overflow-scrolling: touch;
+}
