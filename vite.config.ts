@@ -3,6 +3,7 @@ import path from 'path'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
+import legacy from '@vitejs/plugin-legacy'
 
 
 function figmaAssetResolver() {
@@ -24,6 +25,11 @@ export default defineConfig({
     // Tailwind is not being actively used – do not remove them
     react(),
     tailwindcss(),
+    // 兼容旧版 Android/QQ浏览器
+    legacy({
+      targets: ['Android >= 5', 'Chrome >= 49', 'iOS >= 10'],
+      additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
+    }),
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
